@@ -1,0 +1,44 @@
+---
+export const prerender = true;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/common/Container.astro";
+import ProductBrowser from "../../components/products/ProductBrowser";
+import CTASection from "../../components/common/CTASection.astro";
+import { humanConsumablesProducts } from "../../data/humanConsumables";
+import { getBrandsByDivision } from "../../data/brands";
+import { toSearchable } from "../../lib/products";
+
+const brands = getBrandsByDivision("human-consumables");
+const searchable = humanConsumablesProducts.map(toSearchable);
+
+const filterGroups = [
+  {
+    label: "Brand",
+    key: "brand" as const,
+    options: brands.map((b) => ({ value: b.slug, label: b.name })),
+  },
+];
+---
+
+<BaseLayout
+  title="Human Consumables"
+  description="Natural ingredients, nutrition and wellness products from Earth Blend, LactoNest, Sucrowin and Bionoids."
+>
+  <section class="bg-hc-cream py-16 sm:py-20">
+    <Container>
+      <p class="text-sm font-semibold uppercase tracking-wide text-hc-green">Human Consumables</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl font-display font-bold text-brand-ink">Natural ingredients. Nutrition. Wellness.</h1>
+      <p class="mt-4 max-w-xl text-brand-ink/70">
+        Explore our four brands — Earth Blend, LactoNest, Sucrowin and Bionoids — covering spices, botanical extracts, infant nutrition, sweeteners and wellness blends.
+      </p>
+    </Container>
+  </section>
+
+  <section class="py-14 sm:py-16">
+    <Container>
+      <ProductBrowser client:load products={searchable} filterGroups={filterGroups} basePath="/human-consumables/products" accent="green" />
+    </Container>
+  </section>
+
+  <CTASection />
+</BaseLayout>

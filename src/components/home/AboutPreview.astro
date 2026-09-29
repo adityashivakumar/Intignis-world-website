@@ -1,0 +1,35 @@
+---
+import Container from "../common/Container.astro";
+import SectionHeader from "../common/SectionHeader.astro";
+import { company } from "../../data/company";
+
+const points = [
+  { label: "Established", value: String(company.foundedYear) },
+  { label: "Foundation", value: "Chemical manufacturing" },
+  { label: "Portfolio", value: "Diversified across two divisions" },
+  { label: "Focus", value: "Global markets & quality testing" },
+];
+---
+
+<section class="py-20 sm:py-24">
+  <Container class="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+    <SectionHeader
+      eyebrow="About Intignis World"
+      title="A Strong Foundation. A Broader Tomorrow."
+      description={`${company.parentCompany} was established in ${company.foundedYear} with a strong foundation in the chemical manufacturing industry, and has since diversified into multiple product categories serving global markets.`}
+    />
+    <div class="grid grid-cols-2 gap-5" data-reveal>
+      {points.map((point) => (
+        <div class="rounded-sm border border-black/10 p-5">
+          <p class="text-2xl font-display font-bold text-brand-navy">{point.value}</p>
+          <p class="mt-1 text-sm text-brand-ink/60">{point.label}</p>
+        </div>
+      ))}
+    </div>
+  </Container>
+  <Container class="mt-10">
+    <a href="/about" class="text-sm font-semibold text-brand-orange hover:text-brand-navy">
+      About Intignis World →
+    </a>
+  </Container>
+</section>

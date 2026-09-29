@@ -1,0 +1,57 @@
+---
+import Container from "../common/Container.astro";
+import { company, footerLinkGroups } from "../../data/company";
+---
+
+<footer class="mt-24 bg-brand-navy text-white">
+  <Container class="grid gap-12 py-16 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
+    <div>
+      <p class="text-lg font-display font-extrabold tracking-tight">
+        INTIGNIS <span class="text-brand-orange-light">WORLD</span>
+      </p>
+      <p class="mt-3 max-w-xs text-sm leading-relaxed text-white/60">
+        A division of {company.parentCompany}. {company.tagline}
+      </p>
+      <p class="mt-6 text-xs uppercase tracking-wide text-white/40">{company.madeInIndia}</p>
+    </div>
+
+    {footerLinkGroups.map((group) => (
+      <div>
+        <p class="text-sm font-semibold text-white/50">{group.title}</p>
+        <ul class="mt-4 space-y-3">
+          {group.links.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-white/80 hover:text-brand-orange-light">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+
+    <div>
+      <p class="text-sm font-semibold text-white/50">Contact</p>
+      <div class="mt-4 space-y-1 text-sm text-white/80">
+        {company.contact.corporateOffice.lines.map((line) => (
+          <p>{line}</p>
+        ))}
+      </div>
+      <div class="mt-4 space-y-1 text-sm text-white/80">
+        {company.contact.phones.map((phone) => (
+          <p><a href={`tel:${phone.replace(/\s/g, "")}`} class="hover:text-brand-orange-light">{phone}</a></p>
+        ))}
+        {company.contact.emails.map((email) => (
+          <p><a href={`mailto:${email}`} class="hover:text-brand-orange-light">{email}</a></p>
+        ))}
+      </div>
+    </div>
+  </Container>
+
+  <div class="border-t border-white/10">
+    <Container class="flex flex-col gap-2 py-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+      <p>{company.copyright}</p>
+      <p>{company.madeInIndia}</p>
+    </Container>
+  </div>
+</footer>

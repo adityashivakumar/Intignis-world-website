@@ -1,0 +1,29 @@
+---
+import Container from "../common/Container.astro";
+import SectionHeader from "../common/SectionHeader.astro";
+import ProductCard from "../products/ProductCard.astro";
+import { industrialProducts } from "../../data/industrialSolutions";
+---
+
+<section class="bg-ind-navy py-20 sm:py-24">
+  <Container>
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <SectionHeader
+        tone="dark"
+        eyebrow="Industrial Solutions"
+        title="Fire-Sol® — Engineered for Every Boiler"
+        description="Combustion and boiler chemistry solutions adapted to boiler type and fuel."
+      />
+      <a href="/industrial-solutions" class="text-sm font-semibold text-brand-orange-light hover:text-white">
+        View all Fire-Sol products →
+      </a>
+    </div>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+      {industrialProducts.map((product) => (
+        <div class="rounded-sm bg-white/[0.03]">
+          <ProductCard product={product} compact />
+        </div>
+      ))}
+    </div>
+  </Container>
+</section>

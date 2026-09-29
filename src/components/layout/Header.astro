@@ -1,0 +1,52 @@
+---
+import Container from "../common/Container.astro";
+import MobileMenu from "./MobileMenu";
+import { navigation, headerCta, company } from "../../data/company";
+
+const currentPath = Astro.url.pathname;
+function isActive(href: string) {
+  if (href === "/") return currentPath === "/";
+  return currentPath.startsWith(href);
+}
+
+// 1. Create a cleaned-up list without the plain "Contact" link
+const filteredNavigation = navigation.filter(item => item.label !== 'Contact');
+---
+
+<header class="sticky top-0 z-40 border-b border-black/5 bg-brand-paper/90 backdrop-blur supports-[backdrop-filter]:bg-brand-paper/80">
+  <Container class="flex min-h-[72px] items-center justify-between gap-4 py-3">
+    <a href="/" class="flex shrink-0 items-center gap-2 whitespace-nowrap">
+      <span class="text-lg sm:text-xl font-display font-extrabold tracking-tight text-brand-navy">
+        INTIGNIS <span class="text-brand-orange">WORLD</span>
+      </span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-7" aria-label="Primary">
+      {/* 2. Use the filtered list for desktop */}
+      {filteredNavigation.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            "text-sm font-medium transition-colors hover:text-brand-orange",
+            isActive(item.href) ? "text-brand-orange" : "text-brand-ink/80",
+          ]}
+          aria-current={isActive(item.href) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden lg:block shrink-0">
+      <a
+        href={headerCta.href}
+        class="inline-flex items-center rounded-sm bg-brand-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-orange"
+      >
+        {headerCta.label}
+      </a>
+    </div>
+
+    {/* 3. Pass the filtered list to the mobile menu */}
+    <MobileMenu client:load navigation={filteredNavigation as unknown as { label: string; href: string }[]} cta={headerCta} brandName={company.brandName} />
+  </Container>
+</header>

@@ -1,0 +1,76 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../common/Container.astro";
+import Breadcrumb from "../common/Breadcrumb.astro";
+import SectionHeader from "../common/SectionHeader.astro";
+import ProductCard from "../products/ProductCard.astro";
+import CTASection from "../common/CTASection.astro";
+import { getBrand } from "../../data/brands";
+import { getConsumableProductsByBrand } from "../../data/humanConsumables";
+
+interface Props {
+  brandSlug: string;
+}
+const { brandSlug } = Astro.props;
+const brand = getBrand(brandSlug);
+if (!brand) throw new Error(`Unknown brand slug: ${brandSlug}`);
+const products = getConsumableProductsByBrand(brandSlug);
+
+const allApplications = Array.from(new Set(products.flatMap((p) => p.applications))).slice(0, 10);
+---
+
+<BaseLayout title={brand.name} description={brand.description}>
+  <Container>
+    <Breadcrumb items={[{ label: "Human Consumables", href: "/human-consumables" }, { label: brand.name }]} />
+  </Container>
+
+  <section class="bg-hc-cream py-14 sm:py-16">
+    <Container class="grid gap-10 lg:grid-cols-2 lg:items-center">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-hc-green">Human Consumables Brand</p>
+        <h1 class="mt-2 text-4xl sm:text-5xl font-display font-bold text-brand-ink">{brand.name}</h1>
+        <p class="mt-3 text-lg text-brand-ink/70">{brand.tagline}</p>
+      </div>
+      <div class="aspect-[4/3] w-full overflow-hidden rounded-sm bg-hc-beige/60">
+        <img src={brand.heroImage} alt={brand.name} loading="eager" decoding="async" width="800" height="600" class="h-full w-full object-cover" />
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-14 sm:py-16">
+    <Container class="max-w-3xl space-y-4 text-brand-ink/75 leading-relaxed">
+      <p>{brand.description}</p>
+      <p>{brand.sourcing}</p>
+    </Container>
+  </section>
+
+  <section class="py-4 sm:py-6">
+    <Container>
+      <SectionHeader eyebrow="Product Collection" title={`${brand.name} Products`} />
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => <ProductCard product={product} />)}
+      </div>
+    </Container>
+  </section>
+
+  {allApplications.length > 0 && (
+    <section class="bg-hc-cream py-14 sm:py-16">
+      <Container>
+        <SectionHeader eyebrow="Applications" title="Where These Ingredients Are Used" />
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {allApplications.map((app) => (
+            <li class="rounded-full border border-hc-green/25 px-4 py-1.5 text-sm text-hc-green">{app}</li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  )}
+
+  <section class="py-14 sm:py-16">
+    <Container class="max-w-3xl">
+      <SectionHeader eyebrow="Quality & Sourcing" title="How We Source and Verify" description={brand.sourcing} />
+    </Container>
+  </section>
+
+  <CTASection headline={`Interested in ${brand.name}?`} description="Send an enquiry and our team will share product information, samples and pricing." />
+</BaseLayout>

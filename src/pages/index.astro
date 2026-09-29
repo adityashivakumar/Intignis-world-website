@@ -1,0 +1,18 @@
+---
+export const prerender = true;
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/home/Hero.astro";
+import DivisionSelector from "../components/home/DivisionSelector.astro";
+import AboutPreview from "../components/home/AboutPreview.astro";
+import CTASection from "../components/common/CTASection.astro";
+---
+
+<BaseLayout
+  title="INTIGNIS WORLD — One Company. Two Worlds of Solutions."
+  description="INTIGNIS WORLD brings together Human Consumables and Industrial Solutions from INTIGNIS INDUSTRIES PRIVATE LIMITED: natural ingredients, infant nutrition and sweeteners, alongside Fire-Sol boiler chemistry solutions."
+>
+  <Hero />
+  <DivisionSelector />
+  <AboutPreview />
+  <CTASection />
+</BaseLayout>

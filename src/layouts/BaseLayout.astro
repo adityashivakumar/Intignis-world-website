@@ -1,0 +1,116 @@
+---
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import { company } from "../data/company";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  noIndex?: boolean;
+  /** Extra JSON-LD objects to render in addition to the site-wide Organization schema. */
+  structuredData?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = "INTIGNIS WORLD — one company, two worlds of solutions. Natural human consumable ingredients and industrial combustion solutions from INTIGNIS INDUSTRIES PRIVATE LIMITED.",
+  ogImage = "/images/hero/hero-consumables.jpg",
+  noIndex = false,
+  structuredData = [],
+} = Astro.props;
+
+const pageTitle = title.includes("INTIGNIS") ? title : `${title} | INTIGNIS WORLD`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: company.brandName,
+  legalName: company.parentCompany,
+  url: String(Astro.site),
+  foundingDate: String(company.foundedYear),
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: company.contact.corporateOffice.lines.join(", "),
+  },
+  contactPoint: company.contact.phones.map((phone) => ({
+    "@type": "ContactPoint",
+    telephone: phone,
+    contactType: "sales",
+  })),
+  email: company.contact.emails[0],
+};
+
+const allSchemas = [organizationSchema, ...structuredData];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / social — TODO: replace placeholder image with final brand asset -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    {allSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    <script is:inline>
+      document.documentElement.classList.add("js-reveal-ready");
+    </script>
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-brand-orange focus:text-white focus:px-4 focus:py-2">
+      Skip to content
+    </a>
+    <Header />
+    <main id="main-content" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll("[data-reveal]");
+        if (!("IntersectionObserver" in window) || els.length === 0) {
+          els.forEach(function (el) { el.classList.add("is-visible"); });
+          return;
+        }
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+        );
+        els.forEach(function (el) { observer.observe(el); });
+      })();
+    </script>
+  </body>
+</html>

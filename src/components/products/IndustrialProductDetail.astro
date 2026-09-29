@@ -1,0 +1,104 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../common/Container.astro";
+import Breadcrumb from "../common/Breadcrumb.astro";
+import ProductHero from "./ProductHero.astro";
+import ProductSpecifications from "./ProductSpecifications.astro";
+import RelatedProducts from "./RelatedProducts.astro";
+import CTASection from "../common/CTASection.astro";
+import type { IndustrialProduct } from "../../types/product";
+import { getRelatedProducts } from "../../lib/products";
+
+interface Props {
+  product: IndustrialProduct;
+}
+const { product } = Astro.props;
+const related = getRelatedProducts(product);
+
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: product.name,
+  description: product.shortDescription,
+  category: product.category,
+  brand: { "@type": "Brand", name: "Fire-Sol" },
+  image: new URL(product.image, Astro.site).toString(),
+  additionalProperty: [
+    { "@type": "PropertyValue", name: "Boiler Type", value: product.boilerType },
+    { "@type": "PropertyValue", name: "Fuel Compatibility", value: product.fuelTypes.join(", ") },
+  ],
+};
+---
+
+<BaseLayout title={product.name} description={product.shortDescription} ogImage={product.image} structuredData={[productSchema]}>
+  <Container>
+    <Breadcrumb
+      items={[
+        { label: "Industrial Solutions", href: "/industrial-solutions" },
+        { label: product.name },
+      ]}
+    />
+    <ProductHero product={product} />
+  </Container>
+
+  <Container class="max-w-3xl space-y-12 py-8 sm:py-12">
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Overview</h2>
+      <p class="mt-3 text-brand-ink/75 leading-relaxed">{product.description}</p>
+    </section>
+
+    <section class="grid gap-6 sm:grid-cols-2">
+      <div class="rounded-sm border border-black/10 p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-ind-steel">Boiler Type</h3>
+        <p class="mt-2 font-display text-lg font-bold text-brand-ink">{product.boilerType}</p>
+      </div>
+      <div class="rounded-sm border border-black/10 p-6">
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-ind-steel">Fuel Compatibility</h3>
+        <ul class="mt-2 flex flex-wrap gap-2">
+          {product.fuelTypes.map((fuel) => (
+            <li class="rounded-full border border-ind-steel/30 px-3 py-1 text-xs font-medium text-ind-steel">{fuel}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Application</h2>
+      <p class="mt-3 text-brand-ink/75 leading-relaxed">{product.application}</p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Technical Information</h2>
+      <div class="mt-4"><ProductSpecifications specifications={product.specifications} /></div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Potential Benefits</h2>
+      <p class="text-xs text-brand-ink/40 mb-3">Figures below are as published; not re-verified for this specific boiler/fuel combination.</p>
+      <ul class="grid gap-2 sm:grid-cols-2">
+        {product.technicalBenefits.map((b) => (
+          <li class="flex items-start gap-2 text-sm text-brand-ink/75">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ind-steel"></span>
+            {b}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="rounded-sm border border-black/10 bg-slate-50 p-6">
+      <h2 class="text-xl font-display font-bold text-brand-ink">Custom Requirement?</h2>
+      <p class="mt-2 text-sm text-brand-ink/70">
+        Fire-Sol® formulations are adapted according to boiler type, fuel type and customer requirements. If your setup isn't listed above, request a technical consultation.
+      </p>
+      <a href="/contact" class="mt-4 inline-flex items-center justify-center rounded-sm bg-ind-navy px-6 py-3 text-sm font-semibold text-white hover:bg-ind-steel">
+        Request Technical Consultation
+      </a>
+    </section>
+  </Container>
+
+  <Container class="py-8 sm:py-12">
+    <RelatedProducts products={related} />
+  </Container>
+
+  <CTASection headline={`Request Information on ${product.name}`} />
+</BaseLayout>

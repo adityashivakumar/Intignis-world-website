@@ -1,0 +1,47 @@
+---
+import type { Product } from "../../types/product";
+
+interface Props {
+  product: Product;
+  compact?: boolean;
+}
+const { product, compact = false } = Astro.props;
+const isIndustrial = product.division === "industrial-solutions";
+const href = `/${product.division}/products/${product.slug}`;
+---
+
+<a
+  href={href}
+  class:list={[
+    "group flex flex-col overflow-hidden rounded-sm border border-black/10 bg-white transition-shadow hover:shadow-lg",
+  ]}
+>
+  <div class:list={["w-full overflow-hidden bg-slate-100", compact ? "aspect-[16/10]" : "aspect-[4/3]"]}>
+    <img
+      src={product.image}
+      alt={product.name}
+      loading="lazy"
+      decoding="async"
+      width="800"
+      height="600"
+      class="h-full w-full object-cover transition-transform group-hover:scale-[1.03]"
+    />
+  </div>
+  <div class="flex flex-1 flex-col p-5">
+    {isIndustrial ? (
+      <p class="text-xs font-semibold uppercase tracking-wide text-ind-steel">{product.boilerTypeCode}</p>
+    ) : (
+      <p class="text-xs font-semibold uppercase tracking-wide text-hc-green">{product.category}</p>
+    )}
+    <h3 class="mt-1.5 font-display text-base font-bold text-brand-ink">{product.name}</h3>
+    <p class="mt-2 line-clamp-2 text-sm text-brand-ink/65">{product.shortDescription}</p>
+    <span
+      class:list={[
+        "mt-4 inline-flex items-center gap-1 text-sm font-semibold group-hover:text-brand-orange",
+        isIndustrial ? "text-ind-steel" : "text-hc-green",
+      ]}
+    >
+      View Details ›
+    </span>
+  </div>
+</a>

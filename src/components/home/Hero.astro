@@ -1,0 +1,35 @@
+---
+import Container from "../common/Container.astro";
+---
+
+<section class="relative overflow-hidden bg-brand-navy text-white">
+  <div class="absolute inset-0 grid grid-cols-2 opacity-40">
+    <div class="bg-[url('/images/hero/hero-consumables.jpg')] bg-cover bg-center"></div>
+    <div class="bg-[url('/images/hero/hero-industrial.jpg')] bg-cover bg-center"></div>
+  </div>
+  <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/80 to-brand-navy/40"></div>
+
+  <Container class="relative py-24 sm:py-32 text-center" data-reveal>
+    <p class="text-sm font-semibold uppercase tracking-[0.2em] text-brand-orange-light">Intignis World</p>
+    <h1 class="mt-4 text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold leading-tight">
+      One Company.<br />Two Worlds of Solutions.
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-base sm:text-lg text-white/75">
+      From nature's finest ingredients to advanced industrial solutions, INTIGNIS WORLD delivers quality, innovation and trusted products to global markets.
+    </p>
+    <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <a
+        href="/human-consumables"
+        class="inline-flex w-full sm:w-auto items-center justify-center rounded-sm bg-brand-orange px-7 py-3.5 text-sm font-semibold hover:bg-brand-orange-light"
+      >
+        Explore Products
+      </a>
+      <a
+        href="#divisions"
+        class="inline-flex w-full sm:w-auto items-center justify-center rounded-sm border border-white/30 px-7 py-3.5 text-sm font-semibold hover:border-white/60"
+      >
+        Discover Our Divisions
+      </a>
+    </div>
+  </Container>
+</section>

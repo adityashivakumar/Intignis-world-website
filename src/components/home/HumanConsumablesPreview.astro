@@ -1,0 +1,25 @@
+---
+import Container from "../common/Container.astro";
+import SectionHeader from "../common/SectionHeader.astro";
+import BrandCard from "../divisions/BrandCard.astro";
+import { getBrandsByDivision } from "../../data/brands";
+import { getConsumableProductsByBrand } from "../../data/humanConsumables";
+
+const brands = getBrandsByDivision("human-consumables");
+---
+
+<section class="bg-hc-cream py-20 sm:py-24">
+  <Container>
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <SectionHeader eyebrow="Human Consumables" title="Natural Ingredients, Trusted Brands" />
+      <a href="/human-consumables" class="text-sm font-semibold text-hc-green hover:text-brand-orange">
+        View all products →
+      </a>
+    </div>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+      {brands.map((brand) => (
+        <BrandCard brand={brand} productCount={getConsumableProductsByBrand(brand.slug).length} />
+      ))}
+    </div>
+  </Container>
+</section>

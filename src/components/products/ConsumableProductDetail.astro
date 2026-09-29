@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../common/Container.astro";
+import Breadcrumb from "../common/Breadcrumb.astro";
+import ProductHero from "./ProductHero.astro";
+import ProductSpecifications from "./ProductSpecifications.astro";
+import ApplicationList from "./ApplicationList.astro";
+import PackagingOptions from "./PackagingOptions.astro";
+import RelatedProducts from "./RelatedProducts.astro";
+import CTASection from "../common/CTASection.astro";
+import type { ConsumableProduct } from "../../types/product";
+import { getBrand } from "../../data/brands";
+import { getRelatedProducts } from "../../lib/products";
+
+interface Props {
+  product: ConsumableProduct;
+}
+const { product } = Astro.props;
+const brand = getBrand(product.brand);
+const related = getRelatedProducts(product);
+
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: product.name,
+  description: product.shortDescription,
+  category: product.category,
+  brand: { "@type": "Brand", name: brand?.name ?? "Intignis World" },
+  image: new URL(product.image, Astro.site).toString(),
+  // No `offers` block — this is a B2B enquiry catalogue, not e-commerce, and pricing isn't published.
+};
+---
+
+<BaseLayout title={product.name} description={product.shortDescription} ogImage={product.image} structuredData={[productSchema]}>
+  <Container>
+    <Breadcrumb
+      items={[
+        { label: "Human Consumables", href: "/human-consumables" },
+        ...(brand ? [{ label: brand.name, href: `/human-consumables/${brand.slug}` }] : []),
+        { label: product.name },
+      ]}
+    />
+    <ProductHero product={product} />
+  </Container>
+
+  <Container class="max-w-3xl space-y-12 py-8 sm:py-12">
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Overview</h2>
+      <p class="mt-3 text-brand-ink/75 leading-relaxed">{product.description}</p>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Key Features</h2>
+      <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+        {product.keyFeatures.map((f) => (
+          <li class="flex items-start gap-2 text-sm text-brand-ink/75">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-hc-green"></span>
+            {f}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Specifications</h2>
+      <div class="mt-4"><ProductSpecifications specifications={product.specifications} /></div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Applications</h2>
+      <div class="mt-4"><ApplicationList applications={product.applications} tone="green" /></div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Packaging</h2>
+      <div class="mt-4"><PackagingOptions packaging={product.packaging} /></div>
+    </section>
+
+    <section>
+      <h2 class="text-xl font-display font-bold text-brand-ink">Quality Information</h2>
+      <p class="mt-3 text-sm text-brand-ink/65">
+        This product undergoes Intignis' standard quality testing, screening and verification process. Certification documents are available on request.
+      </p>
+    </section>
+  </Container>
+
+  <Container class="py-8 sm:py-12">
+    <RelatedProducts products={related} />
+  </Container>
+
+  <CTASection headline={`Request Information on ${product.name}`} />
+</BaseLayout>

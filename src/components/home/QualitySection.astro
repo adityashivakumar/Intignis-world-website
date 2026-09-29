@@ -1,0 +1,30 @@
+---
+import Container from "../common/Container.astro";
+import SectionHeader from "../common/SectionHeader.astro";
+
+const pillars = [
+  { title: "Quality", description: "Every product is evaluated against defined internal quality benchmarks." },
+  { title: "Purity", description: "Sourced and processed with a focus on natural composition wherever claimed." },
+  { title: "Consistency", description: "Repeatable processing standards across every production batch." },
+  { title: "Testing", description: "Standard quality testing, screening, and verification on every product." },
+  { title: "International Standards", description: "Processes aligned with the expectations of global buyers." },
+  { title: "Customer Focus", description: "Long-term relationships built on reliability and responsiveness." },
+];
+---
+
+<section class="py-20 sm:py-24">
+  <Container>
+    <SectionHeader align="center" eyebrow="Quality & Capabilities" title="Standards We Hold Every Product To" />
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+      {pillars.map((pillar) => (
+        <div class="rounded-sm border border-black/10 p-6">
+          <h3 class="font-display text-lg font-bold text-brand-ink">{pillar.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-brand-ink/65">{pillar.description}</p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-8 text-center text-xs text-brand-ink/40">
+      Certification details available on request.
+    </p>
+  </Container>
+</section>

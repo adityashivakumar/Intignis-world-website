@@ -1,0 +1,53 @@
+---
+export const prerender = true;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/common/Container.astro";
+import SectionHeader from "../../components/common/SectionHeader.astro";
+import CTASection from "../../components/common/CTASection.astro";
+
+const pillars = [
+  { title: "Global Markets", description: "Serving customers across international markets — specific countries to be confirmed and listed here." },
+  { title: "India Sourcing", description: "Products sourced from trusted suppliers across different regions of India." },
+  { title: "Export Capabilities", description: "Export-ready packaging and documentation for cross-border shipments." },
+  { title: "Supply Chain", description: "A supply chain built for consistency, from raw material sourcing to final packaging." },
+  { title: "Customer Relationships", description: "A customer-centric approach focused on long-term business relationships." },
+];
+---
+
+<BaseLayout title="Global Reach" description="How INTIGNIS WORLD sources from India and exports products to global markets.">
+  <section class="bg-brand-navy py-16 sm:py-20 text-white">
+    <Container>
+      <p class="text-sm font-semibold uppercase tracking-wide text-brand-orange-light">Global Reach</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl font-display font-bold">Indian Products for a Global Tomorrow.</h1>
+    </Container>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <Container class="grid gap-10 lg:grid-cols-2 lg:items-center">
+      <div class="grid gap-5 sm:grid-cols-2">
+        {pillars.map((pillar) => (
+          <div class="rounded-sm border border-black/10 p-6">
+            <h3 class="font-display font-bold text-brand-ink">{pillar.title}</h3>
+            <p class="mt-2 text-sm text-brand-ink/65">{pillar.description}</p>
+          </div>
+        ))}
+      </div>
+      <div class="aspect-square w-full overflow-hidden rounded-sm bg-slate-100">
+        <img src="/images/global/world-map-placeholder.jpg" alt="Map of India's exports reaching global markets" loading="lazy" decoding="async" class="h-full w-full object-cover" />
+      </div>
+    </Container>
+  </section>
+
+  <section class="bg-hc-cream py-16 sm:py-20">
+    <Container class="max-w-2xl text-center">
+      <SectionHeader
+        align="center"
+        eyebrow="Export-Ready"
+        title="Built for International Buyers"
+        description="From food ingredients to industrial boiler chemistry, our products and documentation are prepared to meet the expectations of global customers."
+      />
+    </Container>
+  </section>
+
+  <CTASection headline="Looking to Import from Intignis World?" />
+</BaseLayout>

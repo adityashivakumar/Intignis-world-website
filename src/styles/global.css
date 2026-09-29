@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/*
+  =========================================================
+  INTIGNIS WORLD — DESIGN TOKENS
+  Edit these values to change colours/fonts across the whole
+  site. Nothing below should need to be touched anywhere else.
+  =========================================================
+*/
+@theme {
+  /* Type */
+  --font-sans: "Manrope", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Manrope", ui-sans-serif, sans-serif;
+
+  /* Brand / parent company */
+  --color-brand-navy: #0b1f33;
+  --color-brand-navy-light: #16324f;
+  --color-brand-orange: #e8590c;
+  --color-brand-orange-light: #ff8340;
+  --color-brand-ink: #10151b;
+  --color-brand-paper: #fbfaf7;
+
+  /* Division 1 — Human Consumables */
+  --color-hc-green: #3f5d3a;
+  --color-hc-green-dark: #2a4026;
+  --color-hc-cream: #f6f1e6;
+  --color-hc-beige: #e8dcc4;
+  --color-hc-brown: #6b4d33;
+
+  /* Division 2 — Industrial Solutions */
+  --color-ind-navy: #0c1c2e;
+  --color-ind-steel: #3c6e91;
+  --color-ind-charcoal: #23262b;
+  --color-ind-orange: #e8590c;
+
+  /* Layout */
+  --breakpoint-3xl: 1600px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Guards against any transform/translate-based component (mobile menu,
+       reveal animations) ever introducing horizontal scroll on small screens. */
+    overflow-x: hidden;
+  }
+  body {
+    @apply bg-brand-paper text-brand-ink font-sans antialiased;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  img, svg {
+    max-width: 100%;
+    height: auto;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-brand-orange);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  .no-motion {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Scroll-reveal: paired with the IntersectionObserver in BaseLayout.astro.
+     Gated behind .js-reveal-ready (set synchronously in <head>) so content
+     stays fully visible if JavaScript is disabled or fails to load. */
+  html.js-reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  html.js-reveal-ready [data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

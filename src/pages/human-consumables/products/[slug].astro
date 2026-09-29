@@ -1,0 +1,16 @@
+---
+export const prerender = true;
+import ConsumableProductDetail from "../../../components/products/ConsumableProductDetail.astro";
+import { humanConsumablesProducts } from "../../../data/humanConsumables";
+
+export function getStaticPaths() {
+  return humanConsumablesProducts.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+---
+
+<ConsumableProductDetail product={product} />

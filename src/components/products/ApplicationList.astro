@@ -1,0 +1,20 @@
+---
+interface Props {
+  applications: string[];
+  tone?: "green" | "steel";
+}
+const { applications, tone = "green" } = Astro.props;
+---
+
+<ul class="flex flex-wrap gap-2">
+  {applications.map((app) => (
+    <li
+      class:list={[
+        "rounded-full border px-4 py-1.5 text-sm",
+        tone === "green" ? "border-hc-green/25 text-hc-green" : "border-ind-steel/30 text-ind-steel",
+      ]}
+    >
+      {app}
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,21 @@
+---
+import type { Specification } from "../../types/product";
+
+interface Props {
+  specifications: Specification[];
+}
+const { specifications } = Astro.props;
+---
+
+{specifications.length > 0 ? (
+  <dl class="divide-y divide-black/10 rounded-sm border border-black/10">
+    {specifications.map((spec) => (
+      <div class="flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-baseline sm:gap-4">
+        <dt class="w-40 shrink-0 text-sm font-semibold text-brand-ink/60">{spec.label}</dt>
+        <dd class="text-sm text-brand-ink">{spec.value}</dd>
+      </div>
+    ))}
+  </dl>
+) : (
+  <p class="text-sm text-brand-ink/50">Specifications available on request.</p>
+)}

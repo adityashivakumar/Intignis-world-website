@@ -1,0 +1,56 @@
+---
+export const prerender = true;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/common/Container.astro";
+import EnquiryForm from "../../components/forms/EnquiryForm";
+import { company } from "../../data/company";
+import { allProducts } from "../../lib/products";
+
+const productOptions = allProducts.map((p) => ({ slug: p.slug, name: p.name, division: p.division }));
+const requestedDivision = Astro.url.searchParams.get("division") ?? undefined;
+---
+
+<BaseLayout title="Contact" description="Get in touch with INTIGNIS WORLD for product information, samples, pricing and technical consultation.">
+  <section class="bg-brand-navy py-16 sm:py-20 text-white">
+    <Container>
+      <p class="text-sm font-semibold uppercase tracking-wide text-brand-orange-light">Contact</p>
+      <h1 class="mt-2 text-4xl sm:text-5xl font-display font-bold">Let's Talk.</h1>
+      <p class="mt-3 max-w-xl text-white/70">Any query, feel free to contact us — our team typically responds within one to two business days.</p>
+    </Container>
+  </section>
+
+  <section class="py-16 sm:py-20">
+    <Container class="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
+      <div class="rounded-sm border border-black/10 p-6 sm:p-8">
+        <EnquiryForm client:load products={productOptions} defaultDivision={requestedDivision} />
+      </div>
+
+      <div class="space-y-8">
+        <div>
+          <h2 class="font-display text-lg font-bold text-brand-ink">{company.contact.corporateOffice.label}</h2>
+          <div class="mt-2 space-y-1 text-sm text-brand-ink/70">
+            {company.contact.corporateOffice.lines.map((line) => <p>{line}</p>)}
+          </div>
+        </div>
+        <div>
+          <h2 class="font-display text-lg font-bold text-brand-ink">{company.contact.regionalOffice.label}</h2>
+          <div class="mt-2 space-y-1 text-sm text-brand-ink/70">
+            {company.contact.regionalOffice.lines.map((line) => <p>{line}</p>)}
+          </div>
+        </div>
+        <div>
+          <h2 class="font-display text-lg font-bold text-brand-ink">Phone</h2>
+          {company.contact.phones.map((phone) => (
+            <p class="mt-1 text-sm"><a href={`tel:${phone.replace(/\s/g, "")}`} class="text-brand-ink/70 hover:text-brand-orange">{phone}</a></p>
+          ))}
+        </div>
+        <div>
+          <h2 class="font-display text-lg font-bold text-brand-ink">Email</h2>
+          {company.contact.emails.map((email) => (
+            <p class="mt-1 text-sm"><a href={`mailto:${email}`} class="text-brand-ink/70 hover:text-brand-orange">{email}</a></p>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

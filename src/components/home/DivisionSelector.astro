@@ -1,0 +1,13 @@
+---
+import Container from "../common/Container.astro";
+import DivisionCard from "../divisions/DivisionCard.astro";
+import { divisions } from "../../data/divisions";
+---
+
+<section id="divisions" class="py-20 sm:py-24">
+  <Container>
+    <div class="grid gap-6 sm:grid-cols-2" data-reveal>
+      {divisions.map((division, index) => <DivisionCard division={division} index={index} />)}
+    </div>
+  </Container>
+</section>
