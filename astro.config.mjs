@@ -5,6 +5,8 @@ import sitemap from '@astrojs/sitemap';
 import node from '@astrojs/node';
 import tailwindcss from '@tailwindcss/vite';
 
+import vercel from '@astrojs/vercel';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://intignisworld.com',
@@ -23,5 +25,5 @@ export default defineConfig({
   // self-hosted Node server — see README.md "Deployment" section.
   // ---------------------------------------------------------------
   output: 'server',
-  adapter: node({ mode: 'standalone' }),
+  adapter: vercel(),
 });
