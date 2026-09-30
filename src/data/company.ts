@@ -52,7 +52,6 @@ export const navigation = [
   { label: "Human Consumables", href: "/human-consumables" },
   { label: "Industrial Solutions", href: "/industrial-solutions" },
   { label: "Quality", href: "/quality" },
-  { label: "Global Reach", href: "/global-reach" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -71,7 +70,6 @@ export const footerLinkGroups = [
     links: [
       { label: "About Us", href: "/about" },
       { label: "Quality", href: "/quality" },
-      { label: "Global Reach", href: "/global-reach" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -119,6 +117,28 @@ export const aboutContent = {
 
 /** As displayed on intignisindustries.com's Certifications section. */
 export const certifications = [
-  { name: "ISO Certified", note: "Certificate image available on request." },
-  { name: "Startup India", note: "Recognized under the Startup India initiative." },
+  {
+    id: "iso-9001",
+    title: "ISO 9001:2015 Certification",
+    category: "ISO",
+    issuer: "International Quality Management Standard",
+    description: "Certified for standardized quality management systems, manufacturing screening, and operational verification.",
+    image: "/images/certifications/iso-9001.jpg",
+  },
+  {
+    id: "startup-india",
+    title: "DPIIT Certificate of Recognition",
+    category: "Government",
+    issuer: "Department for Promotion of Industry and Internal Trade (#startupindia)",
+    description: "Official recognition by the Government of India for chemical and specialty materials development.",
+    image: "/images/certifications/startup-india.jpg",
+  },
+  {
+    id: "iso-management",
+    title: "ISO Environmental & Standards Compliance",
+    category: "ISO",
+    issuer: "Accredited Quality & Safety Registration",
+    description: "Demonstrating adherence to international processing, traceability, and export manufacturing criteria.",
+    image: "/images/certifications/iso-management.jpg",
+  },
 ] as const;

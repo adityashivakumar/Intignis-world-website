@@ -2,9 +2,8 @@
 export const prerender = true;
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/common/Container.astro";
-import SectionHeader from "../../components/common/SectionHeader.astro";
 import CTASection from "../../components/common/CTASection.astro";
-import { certifications } from "../../data/company";
+import CertificationsSection from "../../components/common/CertificationsSection.astro";
 
 const sections = [
   {
@@ -33,10 +32,12 @@ const sections = [
       "Packaging and documentation are prepared with international buyers in mind, supporting long-term business relationships.",
   },
 ];
-
 ---
 
-<BaseLayout title="Quality" description="Our quality philosophy, testing and verification approach, and export readiness at INTIGNIS WORLD.">
+<BaseLayout 
+  title="Quality & Certifications — INTIGNIS WORLD" 
+  description="Our quality philosophy, testing and verification approach, and verified ISO certifications adhering to export-grade purity and industrial standards."
+>
   <section class="bg-brand-navy py-16 sm:py-20 text-white">
     <Container>
       <p class="text-sm font-semibold uppercase tracking-wide text-brand-orange-light">Quality</p>
@@ -55,22 +56,8 @@ const sections = [
     </Container>
   </section>
 
-  <section class="bg-hc-cream py-16 sm:py-20">
-    <Container>
-      <SectionHeader eyebrow="Certifications" title="Recognition & Compliance" align="center" />
-      <div class="mt-10 flex flex-wrap justify-center gap-4">
-        {certifications.map((cert) => (
-          <div class="flex h-28 w-44 flex-col items-center justify-center gap-1 rounded-sm border border-black/10 bg-white text-center px-3">
-            <p class="text-sm font-semibold text-brand-ink">{cert.name}</p>
-            <p class="text-xs text-brand-ink/45">{cert.note}</p>
-          </div>
-        ))}
-      </div>
-      <p class="mt-6 text-center text-xs text-brand-ink/40">
-        Certificate images to be added — currently text-only pending final assets.
-      </p>
-    </Container>
-  </section>
+  <!-- Newly Integrated Image & Lightbox Section -->
+  <CertificationsSection />
 
   <CTASection headline="Have Quality or Compliance Questions?" />
 </BaseLayout>

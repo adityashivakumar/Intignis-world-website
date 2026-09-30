@@ -15,10 +15,20 @@ const filteredNavigation = navigation.filter(item => item.label !== 'Contact');
 
 <header class="sticky top-0 z-40 border-b border-black/5 bg-brand-paper/90 backdrop-blur supports-[backdrop-filter]:bg-brand-paper/80">
   <Container class="flex min-h-[72px] items-center justify-between gap-4 py-3">
-    <a href="/" class="flex shrink-0 items-center gap-2 whitespace-nowrap">
-      <span class="text-lg sm:text-xl font-display font-extrabold tracking-tight text-brand-navy">
-        INTIGNIS <span class="text-brand-orange">WORLD</span>
-      </span>
+    
+    <!-- Updated Logo Section -->
+    <a 
+      href="/" 
+      class="flex shrink-0 items-center focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+    >
+      <img 
+        src="/images/logo.png" 
+        alt="INTIGNIS INDUSTRIES PVT LTD Logo" 
+        width="240"
+        height="60"
+        class="h-10 sm:h-12 w-auto object-contain"
+      />
+      <span class="sr-only">INTIGNIS WORLD</span>
     </a>
 
     <nav class="hidden lg:flex items-center gap-7" aria-label="Primary">

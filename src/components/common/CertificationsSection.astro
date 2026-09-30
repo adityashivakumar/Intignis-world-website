@@ -1,0 +1,95 @@
+---
+import { certifications } from "../../data/company";
+
+interface Props {
+  showTitle?: boolean;
+}
+
+const { showTitle = true } = Astro.props;
+---
+
+<section class="py-16 bg-slate-50 border-y border-slate-100" id="certifications">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {showTitle && (
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <p class="text-xs uppercase tracking-widest font-semibold text-emerald-700">Standards & Compliance</p>
+        <h2 class="text-3xl font-bold tracking-tight text-slate-900 mt-2">Certifications & Accreditations</h2>
+        <p class="text-sm text-slate-600 mt-2">
+          Rigorous third-party audits and government recognitions verifying our quality controls and manufacturing standards.
+        </p>
+      </div>
+    )}
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {certifications.map((cert) => (
+        <article class="bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+          <button 
+            type="button"
+            class="group relative block w-full bg-slate-100 overflow-hidden cursor-zoom-in text-left focus:outline-none focus:ring-2 focus:ring-emerald-600"
+            onclick={`document.getElementById('modal-${cert.id}').showModal()`}
+            aria-label={`View full certificate: ${cert.title}`}
+          >
+            <img
+              src={cert.image}
+              alt={cert.title}
+              loading="lazy"
+              decoding="async"
+              class="w-full h-80 object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+            />
+            <div class="absolute inset-0 bg-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span class="bg-white/95 backdrop-blur px-3 py-1.5 rounded-full text-xs font-medium text-slate-800 shadow">
+                Click to Enlarge
+              </span>
+            </div>
+          </button>
+
+          <div class="p-5 flex-1 flex flex-col justify-between border-t border-slate-100">
+            <div>
+              <span class="inline-block text-[11px] font-semibold text-emerald-700 uppercase tracking-wide mb-1">
+                {cert.category}
+              </span>
+              <h3 class="text-base font-bold text-slate-900">{cert.title}</h3>
+              <p class="text-xs text-slate-500 mt-1">{cert.issuer}</p>
+            </div>
+            <p class="text-xs text-slate-600 mt-3 pt-3 border-t border-slate-100 leading-relaxed">
+              {cert.description}
+            </p>
+          </div>
+
+          <!-- Native Accessible Dialog Lightbox -->
+          <dialog id={`modal-${cert.id}`} class="rounded-xl p-0 backdrop:bg-slate-900/70 max-w-3xl w-full mx-auto my-auto shadow-2xl">
+            <div class="bg-white p-6 relative">
+              <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <h4 class="text-base font-bold text-slate-900">{cert.title}</h4>
+                <button
+                  type="button"
+                  class="text-slate-400 hover:text-slate-700 p-1 text-sm font-semibold rounded-lg"
+                  onclick={`document.getElementById('modal-${cert.id}').close()`}
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
+              </div>
+              <div class="py-4 flex justify-center bg-slate-50 rounded-lg my-4">
+                <img
+                  src={cert.image}
+                  alt={cert.title}
+                  class="max-h-[75vh] w-auto object-contain rounded"
+                />
+              </div>
+              <div class="text-right">
+                <button
+                  type="button"
+                  class="px-4 py-2 text-xs font-semibold rounded-md bg-slate-900 text-white hover:bg-slate-800 transition-colors"
+                  onclick={`document.getElementById('modal-${cert.id}').close()`}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </dialog>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

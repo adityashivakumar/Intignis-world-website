@@ -5,11 +5,22 @@ import { company, footerLinkGroups } from "../../data/company";
 
 <footer class="mt-24 bg-brand-navy text-white">
   <Container class="grid gap-12 py-16 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
-    <div>
-      <p class="text-lg font-display font-extrabold tracking-tight">
-        INTIGNIS <span class="text-brand-orange-light">WORLD</span>
-      </p>
-      <p class="mt-3 max-w-xs text-sm leading-relaxed text-white/60">
+    <div class="flex flex-col items-start">
+      <a 
+        href="/" 
+        class="inline-block bg-white px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-orange-light focus:ring-offset-2 focus:ring-offset-brand-navy"
+      >
+        <img 
+          src="/images/logo.png" 
+          alt="INTIGNIS INDUSTRIES PVT LTD Logo" 
+          width="240"
+          height="60"
+          class="h-10 w-auto object-contain"
+        />
+        <span class="sr-only">INTIGNIS WORLD</span>
+      </a>
+      
+      <p class="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
         A division of {company.parentCompany}. {company.tagline}
       </p>
       <p class="mt-6 text-xs uppercase tracking-wide text-white/40">{company.madeInIndia}</p>

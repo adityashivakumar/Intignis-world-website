@@ -16,17 +16,17 @@ const href = `/${product.division}/products/${product.slug}`;
     "group flex flex-col overflow-hidden rounded-sm border border-black/10 bg-white transition-shadow hover:shadow-lg",
   ]}
 >
-  <div class:list={["w-full overflow-hidden bg-slate-100", compact ? "aspect-[16/10]" : "aspect-[4/3]"]}>
+  <!-- Removed padding, set to aspect-square for perfect 1:1 image fitting -->
+  <div class:list={["w-full overflow-hidden border-b border-black/5", compact ? "aspect-[4/3]" : "aspect-square"]}>
     <img
       src={product.image}
       alt={product.name}
       loading="lazy"
       decoding="async"
-      width="800"
-      height="600"
-      class="h-full w-full object-cover transition-transform group-hover:scale-[1.03]"
+      class="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.03]"
     />
   </div>
+  
   <div class="flex flex-1 flex-col p-5">
     {isIndustrial ? (
       <p class="text-xs font-semibold uppercase tracking-wide text-ind-steel">{product.boilerTypeCode}</p>
