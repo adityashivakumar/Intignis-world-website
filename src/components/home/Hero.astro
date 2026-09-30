@@ -3,10 +3,10 @@ import Container from "../common/Container.astro";
 ---
 
 <section class="relative overflow-hidden bg-brand-navy text-white">
-  <div class="absolute inset-0 grid grid-cols-2 opacity-40">
-    <div class="bg-[url('/images/hero/hero-consumables.jpg')] bg-cover bg-center"></div>
-    <div class="bg-[url('/images/hero/hero-industrial.jpg')] bg-cover bg-center"></div>
-  </div>
+  <!-- Single Background Image Layer -->
+  <div class="absolute inset-0 opacity-40 bg-[url('/images/hero/hero-home.jpg')] bg-cover bg-center"></div>
+  
+  <!-- Gradient Overlay -->
   <div class="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/80 to-brand-navy/40"></div>
 
   <Container class="relative py-24 sm:py-32 text-center" data-reveal>
@@ -20,13 +20,13 @@ import Container from "../common/Container.astro";
     <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
       <a
         href="/human-consumables"
-        class="inline-flex w-full sm:w-auto items-center justify-center rounded-sm bg-brand-orange px-7 py-3.5 text-sm font-semibold hover:bg-brand-orange-light"
+        class="inline-flex w-full sm:w-auto items-center justify-center rounded-sm bg-brand-orange px-7 py-3.5 text-sm font-semibold hover:bg-brand-orange-light transition-colors"
       >
         Explore Products
       </a>
       <a
         href="#divisions"
-        class="inline-flex w-full sm:w-auto items-center justify-center rounded-sm border border-white/30 px-7 py-3.5 text-sm font-semibold hover:border-white/60"
+        class="inline-flex w-full sm:w-auto items-center justify-center rounded-sm border border-white/30 px-7 py-3.5 text-sm font-semibold hover:border-white/60 transition-colors"
       >
         Discover Our Divisions
       </a>
